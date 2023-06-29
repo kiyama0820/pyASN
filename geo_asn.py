@@ -2,7 +2,7 @@ import geoip2.database
 import tqdm
 
 input,output=input().split()
-reader = geoip2.database.Reader('GeoLite2-ASN_20230609/GeoLite2-ASN.mmdb')
+reader = geoip2.database.Reader('GeoLite2-ASN.mmdb')
 output_file = open(output, 'a')
 with open(input) as f:
     #for i, l in tqdm.tqdm(enumerate(f)):
