@@ -1,0 +1,1 @@
+cat file1 file2 file3 | sort | uniq -c | sort -nr > out_file
