@@ -14,13 +14,13 @@ def main():
 """
     for f in glob.glob('../../query-ip/*'):
         if 'tyo' in f and 'a' in f:
-            pyt=pytri("'/tmp/BGP/") # Write additional paths with asapath
+            pyt=pytri('/share/BGP/') # Write additional paths with asapath
             update_pyt(pyt,file_path=f)
         if 'tyo' in f and 'g' in f:
-            pyt=pytri("'/tmp/BGP/") # Write additional paths with asapath
+            pyt=pytri('/share/BGP/') # Write additional paths with asapath
             update_pyt(pyt,file_path=f)
         if 'osa' in f and 'a' in f:
-            pyt=pytri("'/tmp/BGP/") # Write additional paths with asapath
+            pyt=pytri('/share/BGP/') # Write additional paths with asapath
             update_pyt(pyt,file_path=f)
         
 """
@@ -39,7 +39,7 @@ def pytri(aspath):
                 p_l = p_l.replace('\n', '') + ' ' + l
 
             list.append(p_l.replace('* i', '*').replace('*>i', '*>').split())
-    f.close
+    f.close()
     list.pop(0)
 
     p_l=''
@@ -61,7 +61,7 @@ def update_pyt(pyt,file_path):
             ip = ip.split()
             key=pyt.get_key(ip[1])
             pyt.insert(key,[pyt[key][0]+int(ip[0]),pyt[key][1]])
-    f.close
+    f.close()
 
     #f=open(file_path.replace('../../query-ip/', ''), 'w') # The file name of the output should be the same as iplist
     f=open('new.txt', 'w')
@@ -70,7 +70,7 @@ def update_pyt(pyt,file_path):
         if count_path[0]!=0: # Output only paths used more than once
             print(str(count_path[0])+ ' '+str(prefix)+' '+str(count_path[1]))
             f.write(str(count_path[0])+ ' '+str(prefix)+' '+str(count_path[1])+'\n')
-    f.close
+    f.close()
 
 if __name__ == "__main__":
     main()
