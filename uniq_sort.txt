@@ -1,1 +1,3 @@
 cat file1 file2 file3 | sort | uniq -c | sort -nr > out_file
+tar -zxvf GeoLite2-City_20231010.tar.gz 
+https://www.maxmind.com/en/accounts/875820/geoip/downloads
