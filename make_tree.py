@@ -4,7 +4,7 @@ import pytricia
 
 def main():
     # test for glob
-    for f in glob.glob('../../query-ip/*'):
+    for f in glob.glob('../../*'):
         if 'tyo' in f and 'a' in f:
             print('A_TYO',f)
         if 'tyo' in f and 'g' in f:
@@ -12,7 +12,7 @@ def main():
         if 'osa' in f and 'a' in f:
             print('A_OSA',f)
 """
-    for f in glob.glob('../../query-ip/*'):
+    for f in glob.glob('../../*'):
         if 'tyo' in f and 'a' in f:
             pyt=pytri('/share/BGP/') # Write additional paths with asapath
             update_pyt(pyt,file_path=f)
@@ -63,7 +63,7 @@ def update_pyt(pyt,file_path):
             pyt.insert(key,[pyt[key][0]+int(ip[0]),pyt[key][1]])
     f.close()
 
-    #f=open(file_path.replace('../../query-ip/', ''), 'w') # The file name of the output should be the same as iplist
+    #f=open(file_path.replace('../../', ''), 'w') # The file name of the output should be the same as iplist
     f=open('new.txt', 'w')
     for prefix in pyt:
         count_path = pyt[prefix]
