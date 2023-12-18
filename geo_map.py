@@ -5,7 +5,7 @@ import folium
 import pandas as pd
 
 def main():
-    input='a21.tyo.20230721.ip'
+    input='input'
     df = make_df(input)
     make_map(df)
     
