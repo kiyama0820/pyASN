@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 def main():
-  file_name='a22.tyo.20230710.ip'
+  file_name='input'
   G = nx.DiGraph()
   counter,path=make_list(file_name)
   max_co=counter[-1]
