@@ -1,0 +1,5 @@
+tshark -i 5 -T fields -e dns.time port 53
+
+editcap -c 20000 202310191621.pcapng out/out.pcap
+
+tshark -r out/out_00006_20231019161937.pcap | cut -b 18-60 | cut -f 1 -d " " | sort | uniq -c | sort -nr > out_file.txt
