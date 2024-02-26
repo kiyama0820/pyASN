@@ -1,0 +1,98 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+import csv
+import sys
+import glob
+
+def main():
+    path='out2/a/*'
+    for d in glob.glob(path):
+        print(d) 
+        make_main(d)
+
+def make_main(file_name):
+    len=20
+    c=[]
+    as_n=[]
+    with open(file_name) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            for a in row[2:]:
+                if a not in as_n:
+                    as_n.append(a)
+                    c.append(int(row[0]))
+                else:
+                    c[as_n.index(a)]+=int(row[0])
+
+    c,as_n = zip(*sorted(zip(c,as_n),reverse=True))
+    as_n=(list(as_n[:len]))
+
+
+    G = nx.DiGraph()
+    with open(file_name) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            #l = row[1:2]+list(set(as_n) & set(row[1:]))
+            l=row[1:2]
+            for r in row[2:]:
+                if r in as_n:
+                    l.append(r)
+            nx.add_path(G, l) 
+            #print(l)
+
+    keys=list(G._node.keys())
+    
+    cl=[]
+    clustering_csv=file_name.replace('out2/','').replace('.csv','_clustering.csv')
+    with open(clustering_csv) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            cl.append(row)
+
+    node_color=['black']
+    for n in as_n:
+        if cl[0][cl[1].index(n)]=='0':
+            node_color.append('red')
+        else:
+            node_color.append('blue')
+
+    try:
+        pos = nx.planar_layout(G) # Edgeが交差しないように配置
+        nx.draw_networkx(G, pos, alpha=0.5, font_size=3, node_size=100, width=0.3, node_color=node_color)
+    except:
+        pos = nx.spring_layout(G)
+        nx.draw_networkx(G, pos, alpha=0.5, font_size=3, node_size=100, width=0.3, node_color=node_color)
+    plt.savefig(file_name.replace('.csv','.svg').replace('out2/','').replace('c/','')) 
+    plt.cla()
+
+def e_color(max_co,counter):
+   co_ratio=counter/max_co
+   c = int(((-co_ratio / 2) + 0.5) * 255)
+   if co_ratio >= 0.75:
+     return get_colocode(255-c, c, 0)
+     #return 'red'
+   elif co_ratio >= 0.3:
+     return get_colocode(c, 255-c, 0)
+     #return 'orange'
+   elif co_ratio >= 0.1:
+     return get_colocode(0, 255-c, c)
+     #return 'yellow'
+   #elif co_ratio >= 0.05:
+   #  return 'green'
+   else:
+     return get_colocode(0, c, 255-c)
+
+def get_colocode(r,g,b):
+    return '#%02X%02X%02X' % (r,g,b)
+
+def Make_Net(value1,value2):
+    G = nx.Graph()
+    for value in value1:
+        source=value[-1]
+        nx.add_path(G, value)
+    for value in value2:
+        target=value[-1]
+        nx.add_path(G, value)
+
+if __name__ == "__main__":
+    main()
